@@ -17,10 +17,33 @@ To begin, visit the [ProteinCartography](https://github.com/Arcadia-Science/Prot
 
 You can find the data generated in the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline on [Zenodo](https://zenodo.org/records/7384393). This data is also included in the `Inputs` folder of this repository as `all_outputs_summarized.tsv`. 
 
+The notebooks in this repository were created to help prepare the metadata, download AlphaFold structures, and apply additional custom overlays to the output map. 
+
+### Set up directory structure
+
+After cloning this repository and the ProteinCartography repository. You should set up your directory structure as follows: 
+
+```
+├── ProteinCartography
+│   └── actin     # preparatory files and ProteinCartography run results end up here
+├── 2023-actin-embedding
+│   ├── notebooks     # notebooks should be in a folder
+│   ├── input      # files from actin prediction get downloaded to here from Zenodo
+│   └── output     # final pub figures end up here
+```
+
+### Prepare metadata
+
 We prepared these proteins for use in the ProteinCartography pipeline using the `prep_metadata.ipynb` notebook.
+
+### Download AlphaFold structures
 
 Next, we downloaded all available AlphaFold sturctures using the `get_alphafold_structures.ipynb` notebook. 
 
+### Run ProteinCartography "Cluster Mode"
+
 We then ran the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) in "Cluster Mode" using the standard pipeline parameters. The complete analysis is linked in the Zenodo (LINK).
+
+### Create custom plots
 
 Finally, we combined the results of ProteinCartography with the results form the Actin Prediction pipeline in the `plotting_overlays.ipynb` notebook to create interactive plots. 
