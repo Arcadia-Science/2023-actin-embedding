@@ -13,22 +13,15 @@ As a use case of this tool, we analyzed the actin family. This is a well-studied
 
 ## General overview
 For in depth instructions regaarding how to use this repository in conjuction with the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) pipeline and the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline, see the [Walkthrough](#walkthrough) below. Briefly, you should follow these steps: 
+
 [1.](#1-clone-this-repository) Clone this repository
-
 [2.](#2-set-up-the-proteincartography-pipeline) Clone the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) pipeline, set up the `cartography_tidy` environment
-
 [3.](#3-set-up-directory-structure) Set up the general directory structure
-
 [4.](#4-fetch-data-from-the-actin-prediction-repo) Fetch data from the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) repo
-
 [5.](#5-prepare-metadata) Use the `1_prepare_metadata.ipynb` notebook to prepare metadata for the ProteinCartography analysis
-
 [6.](#6-download-alphafold-structures) Use the `2_get_alphafold_structures.ipynb` notebook to download all relevant AlphaFold structures
-
 [7.](#7-run-proteincartography-cluster-mode) Run ProteinCartography in "Cluster Mode"
-
 [8.](#8-create-custom-plots) Create custom plots using the `3_plotting_overlays.ipynb`
-
 [9.](#9-evalaute-cluster-distributions) Evaluate cluster distributions using `4_cluster_distributions.ipynb`
 
 
