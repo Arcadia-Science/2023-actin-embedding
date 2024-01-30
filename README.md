@@ -11,15 +11,53 @@ The [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) 
 
 As a use case of this tool, we analyzed the actin family. This is a well-studied family with multiple subfamilies that makes it an interesting choice for the pipeline. Additionally, this protein family is involved in a plethora of cellular functions, meaning the results we find will have relevance to many fields. We've previously investigated this family in our [Defining Actin](https://research.arcadiascience.com/pub/idea-defining-actin/release/4?readingCollection=9a516d32) pub and the corresponding [GitHub repo](https://github.com/Arcadia-Science/2022-actin-prediction). In this analysis, we gathered a list of actins via a BLAST search for the top 50,000 proteins in the NCBI non-redundant (nr) database with no taxonomic constrictions. This list is used in the current analysis.
 
-## Overview
+## General overview
+For in depth instructions regaarding how to use this repository in conjuction with the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) pipeline and the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline, see the [Walkthrough](#walkthrough) below. Briefly, you should follow these steps: 
+[1.](#1-clone-this-repository) Clone this repository
+[2.](#2-set-up-the-proteincartography-pipeline) Clone the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) pipeline, set up the `cartography_tidy` environment
+[3.](#3-set-up-directory-structure) Set up the general directory structure
+[4.](#4-fetch-data-from-the-actin-prediction-repo) Fetch data from the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) repo
+[5.](#5-prepare-metadata) Use the `1_prepare_metadata.ipynb` notebook to prepare metadata for the ProteinCartography analysis
+[6.](#6-download-alphafold-structures) Use the `2_get_alphafold_structures.ipynb` notebook to download all relevant AlphaFold structures
+[7.](#7-run-proteincartography-cluster-mode) Run ProteinCartography in "Cluster Mode"
+[8.](#8-create-custom-plots) Create custom plots using the `3_plotting_overlays.ipynb`
+[9.](#9-evalaute-cluster-distributions) Evaluate cluster distributions using `4_cluster_distributions.ipynb`
 
-To begin, visit the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) for a guide on running the pipeline. The notebooks used in this repo are designed to run alongside the ProteinCartography pipeline, so we recommend cloning the ProteinCartography pipeline before beginning.
 
-You can find the data generated in the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline on [Zenodo](https://zenodo.org/records/7384393). This data is also included in the `Inputs` folder of this repository as `all_outputs_summarized.tsv`. The proteins from this file were used as our input for the analysis in this repository. Because it includes many proteins, this was broken up into 2 batches: `2022-actin-prediction-blastoutputs1.txt` and `2022-actin-prediction-blastoutputs2.txt`.
+## Walkthrough
 
-The notebooks in this repository were created to help prepare the metadata, download AlphaFold structures, and apply additional custom overlays to the output map. 
+### 1. Clone this repository
 
-### Set up directory structure
+First, you should clone this repository using the following command: 
+
+```
+git clone https://github.com/Arcadia-Science/2023-actin-embedding.git
+```
+
+### 2. Set up the `ProteinCartography` pipeline
+
+To begin, visit the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) for a guide on running the pipeline. The notebooks used in this repo are designed to run alongside the ProteinCartography pipeline, so we recommend cloning the ProteinCartography pipeline before beginning. We used the [ProteinCartography pub release v0.4.0-alpha release](https://github.com/Arcadia-Science/ProteinCartography/releases/tag/v0.4.0-alpha) for this analysis.
+
+The Quickstart guide in the ProteinCartography repository should get you started. But briefly, to clone the repository, use the following command: 
+
+```
+git clone https://github.com/Arcadia-Science/ProteinCartography.git
+```
+
+You can then checkout the specific [v0.4.0-alpha release](https://github.com/Arcadia-Science/ProteinCartography/releases/tag/v0.4.0-alpha) using the following: 
+
+```
+git checkout v0.4.0-alpha
+```
+
+For this repository, we use the `cartography_tidy` enviornment from the ProteinCartography pipeline. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and/or [mamba](https://github.com/mamba-org/mamba) to set up your environment. Create the enviornment using conda by running the following code from within the repository: 
+
+````
+conda env create -f envs/cartography_tidy.yml -n cartography_tidy
+conda activate cartography_tidy
+````
+
+### 3. Set up directory structure
 
 After cloning this repository and the ProteinCartography repository. You should set up your directory structure as follows: 
 
@@ -29,41 +67,45 @@ After cloning this repository and the ProteinCartography repository. You should 
 |       └── structures # structures downloaded from the AlphaFold database
 |       └── output # ProteinCartography results end up here
 ├── 2023-actin-embedding
-│   ├── notebooks     # notebooks should be in a folder
-│   ├── input      # files from actin prediction get downloaded to here from Zenodo
-│   └── output     # final pub figures end up here
+│   ├── notebooks       # notebooks used for analysis
+│   ├── input      # files from actin prediction pipeline
+│   └── output     # final figures will end up here
 ```
 
-### Set up environment
+Then move into the `2023-actin-embedding` folder for the remainder of the analysis.
 
-For this repository, we use the `cartography_tidy` enviornment from the ProteinCartography pipeline. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and/or [mamba](https://github.com/mamba-org/mamba) to set up your environment. Create the enviornment using conda by running the following code from within the repository: 
+### 4. Fetch data from the `Actin Prediction` repo
 
-````
-conda env create -f envs/cartography_tidy.yml -n cartography_tidy
-conda activgit ate cartography_tidy
-````
+Once ProteinCartography is installed, you can find the data generated in the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline on [Zenodo](https://zenodo.org/records/7384393). This data is also included in the `Inputs` folder of this repository as `all_outputs_summarized.tsv`. The proteins from this file were used as our input for the analysis in this repository. Because it includes many proteins, this was broken up into 2 batches: `2022-actin-prediction-blastoutputs1.txt` and `2022-actin-prediction-blastoutputs2.txt`.
 
-### Prepare metadata
+The notebooks in this repository were created to help prepare the metadata, download AlphaFold structures, and apply additional custom overlays to the output map. 
 
-We started this analysis with a list of the 50,000 proteins most related to human actin according to protein BLAST. Before the ProteinCartography pipeline could be ran, we prepared the list of proteins using the `prep_metadata.ipynb` notebook. 
+### 5. Prepare metadata
+
+We started this analysis with a list of the 50,000 proteins most related to human actin according to protein BLAST. Before the ProteinCartography pipeline could be ran, we prepared the list of proteins using the `1_prep_metadata.ipynb` notebook from within the `2023-actin-embedding` folder. 
 
 This involves mapping RefSeq IDs to UniProt accession IDs, then retrieving data from UniProt for each protein. The data retrieved from UniProt include protein name, organism, taxonomic information, length, annotation score, length, fragment status, sequence, and gene name. The fragmentary proteins are then filtered out. 
 
 The final list of proteins is reformatted to the [format required](https://github.com/Arcadia-Science/ProteinCartography#feature-file-main-columns) for "Cluster mode" of the ProteinCartography pipeline. 
 
-### Download AlphaFold structures
+### 6. Download AlphaFold structures
 
-Next, we downloaded all available AlphaFold sturctures using the `get_alphafold_structures.ipynb` notebook. 
+Next, we downloaded all available AlphaFold sturctures using the `2_get_alphafold_structures.ipynb` notebook. Alternatively, you can use the `download_pdbs.py` script from the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) repo.
 
-### Run ProteinCartography "Cluster Mode"
+### 7. Run ProteinCartography "Cluster Mode"
 
 We then ran the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) in "Cluster Mode" using the standard pipeline parameters. The complete analysis is linked in the Zenodo (LINK).
 
-From within the `actin` folder inside the `ProteinCartography` folder, we placed the `actin_config_ff.yml` file. Then, from within ProteinCartography, the following command used to run the ProteinCartography pipeline from "Cluster mode" was: 
+We placed the `config_ff_actin.yml` file, which can be found in the `ProteinCartography_docs` folder of this repository inside the `ProteinCartography/actin` folder. Then, from within the `ProteinCartography` folder, the following command used to run the ProteinCartography pipeline from "Cluster Mode" was: 
+
 ```
 snakemake --snakefile Snakefile_ff --configfile actin/config_ff_actin.yml --use-conda --cores 2
-````
+```
 
-### Create custom plots
+### 8. Create custom plots
 
-Finally, we combined the results of ProteinCartography with the results form the Actin Prediction pipeline in the `plotting_overlays.ipynb` notebook to create interactive plots. 
+We used the results of ProteinCartography and the results form the Actin Prediction pipeline to create custom plots. To do this, we moved back into the `2023-actin-emedding` folder, and then used the `3_plotting_overlays.ipynb` notebook to create interactive plots. 
+
+### 9. Evalaute cluster distributions
+
+Finally, we evaluated the distributions of proteins within clusters in the `4_cluster_distributions.ipynb`.
