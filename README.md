@@ -37,8 +37,8 @@ git clone https://github.com/Arcadia-Science/2023-actin-embedding.git
 For this repository, we use the `2023-actin` environemnt, which is the `cartography_tidy` enviornment from the ProteinCartography pipeline plus a few bonus packages. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and/or [mamba](https://github.com/mamba-org/mamba) to set up your environment. Create the enviornment using conda by running the following code from within the repository: 
 
 ````
-conda env create -f envs/2023-actin.yml -n 2023-actin
-conda activate 2023-actin
+conda env create -f envs/2023-actin-embedding.yml -n 2023-actin-embedding
+conda activate 2023-actin-embedding
 ````
 
 
