@@ -15,8 +15,8 @@
 
 # Specify the input and output directories
 # Usually, we place the output directory inside the input directory
-input_dir: "Actin/structures/"
-output_dir: "Actin/output/"
+input_dir: "actin/structures"
+output_dir: "actin/output/"
 
 # Provide a name for the analysis, which is set as a prefix for key output files
 analysis_name: "actin"
@@ -34,7 +34,7 @@ override_file: "features_override.tsv"
 # A features file (usually retrieved from Uniprot) that contains
 # protein metadata for visualization. Uses the same columns as the
 # override_file.
-features_file: "Actin/output/uniprot_features.tsv"
+features_file: "actin/uniprot_features.tsv"
 
 #####################
 # Plotting settings #
