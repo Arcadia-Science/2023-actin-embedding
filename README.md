@@ -35,7 +35,7 @@ First, you should clone this repository using the following command:
 git clone https://github.com/Arcadia-Science/2023-actin-embedding.git
 ```
 
-For this repository, we use the `2023-actin` environment, which is the `cartography_tidy` environment from the ProteinCartography pipeline plus a few bonus packages. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and/or [mamba](https://github.com/mamba-org/mamba) to set up your environment. Create the environment using conda by running the following code from within the repository: 
+For this repository, we use the `2023-actin` environment, which is the `cartography_tidy` environment from the ProteinCartography pipeline plus a few additional packages, including `scipy` and `ipykernel`. We recommend using [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and/or [mamba](https://github.com/mamba-org/mamba) to set up your environment. Create the environment using conda by running the following code from within the repository: 
 
 ````
 conda env create -f envs/2023-actin-embedding.yml -n 2023-actin-embedding
@@ -91,7 +91,7 @@ The notebooks in this repository were created to help prepare the metadata, down
 
 ### 5. Prepare metadata
 
-We started this analysis with a list of the 50,000 proteins most related to human actin according to protein BLAST. Before the ProteinCartography pipeline could be used, we prepared the list of proteins using the `1_prep_metadata.ipynb` notebook from within the `2023-actin-embedding/notebooks` folder using the `2023-actin-embedding` environment. To activate this environment, use the shell command: 
+We started this analysis with a list of the 50,000 proteins most related to human actin according to protein BLAST. Before the ProteinCartography pipeline could be used, we prepared the list of proteins by running the `1_prep_metadata.ipynb` notebook from within the `2023-actin-embedding/notebooks` folder using the `2023-actin-embedding` environment. To activate this environment, use the shell command: 
 
 ```
 conda activate 2023-actin-embedding
@@ -103,7 +103,7 @@ The final list of proteins is reformatted to the [format required](https://githu
 
 ### 6. Download AlphaFold structures
 
-Next, we downloaded all available AlphaFold structures using the `2_get_alphafold_structures.ipynb` notebook. This notebook should be ran from within the `2023-actin-embedding/notebooks` folder using the `2023-actin-embedding` environment, but will deposit structures into `ProteinCartography/actin/structures` if you've set up your directory structure as above.
+Next, we downloaded all available AlphaFold structures by running the `2_get_alphafold_structures.ipynb` notebook. This notebook should be ran from within the `2023-actin-embedding/notebooks` folder using the `2023-actin-embedding` environment, but will deposit structures into `ProteinCartography/actin/structures` if you've set up your directory structure as above.
 
 ### 7. Run ProteinCartography "Cluster Mode"
 
@@ -123,7 +123,7 @@ snakemake --snakefile Snakefile_ff --configfile actin/config_ff_actin.yml --use-
 
 ### 8. Create custom plots
 
-We used the results of ProteinCartography and the results form the Actin Prediction pipeline to create custom plots. To do this, we moved back into the `2023-actin-emedding/notebooks` folder, and then used the `3_plotting_overlays.ipynb` using the `2023-actin-embedding` environment. To activate this environment, run the following command: 
+We used the results of ProteinCartography and the results form the Actin Prediction pipeline to create custom plots. To do this, we moved back into the `2023-actin-emedding/notebooks` folder, and then ran the `3_plotting_overlays.ipynb` using the `2023-actin-embedding` environment. To activate this environment, run the following command: 
 
 ```
 conda activate 2023-actin-embedding
@@ -131,4 +131,4 @@ conda activate 2023-actin-embedding
 
 ### 9. Evaluate cluster distributions
 
-Finally, we evaluated the distributions of proteins within clusters in the `4_cluster_distributions.ipynb`.
+Finally, we evaluated the distributions of proteins within clusters by running the `4_cluster_distributions.ipynb` notebook.
