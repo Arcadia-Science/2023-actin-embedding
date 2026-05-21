@@ -45,7 +45,7 @@ conda activate 2023-actin-embedding
 
 ### 2. Set up the `ProteinCartography` pipeline
 
-To begin, visit the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) repo for a guide on running the pipeline. The notebooks used in this repo are designed to run alongside the ProteinCartography pipeline, so we recommend cloning the ProteinCartography pipeline before beginning. We used the [ProteinCartography pub release v0.4.2 release](https://github.com/Arcadia-Science/ProteinCartography/tree/v0.4.2) for this analysis.
+To begin, visit the [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography) repo for a guide on running the pipeline. The notebooks used in this repo are designed to run alongside the ProteinCartography pipeline, so we recommend cloning the ProteinCartography pipeline before beginning. We used the [ProteinCartography pub release v0.4.2 release](https://github.com/Arcadia-Science/ProteinCartography/tree/v0.4.2) for this analysis. There have since been updates to the ProteinCartography pipeline, including updates to support changes to APIs. We've updated this repo to work with the newest version of [ProteinCartography](https://github.com/Arcadia-Science/ProteinCartography), but you can view the repo that did the analysis in the pub by returning to the tagged release [Pub  Version 1.0](https://github.com/Arcadia-Science/2023-actin-embedding/releases/tag/v1.0).
 
 The Quickstart guide in the ProteinCartography repository should get you started. But briefly, to clone the repository, use the following command: 
 
@@ -53,7 +53,7 @@ The Quickstart guide in the ProteinCartography repository should get you started
 git clone https://github.com/Arcadia-Science/ProteinCartography.git
 ```
 
-You can then checkout the specific [v0.4.2 release](https://github.com/Arcadia-Science/ProteinCartography/tree/v0.4.2) using the following: 
+We originally ran this analysis using the [v0.4.2 release](https://github.com/Arcadia-Science/ProteinCartography/tree/v0.4.2) of the pipeline, which you can check out using the following (note that this historical version of ProteinCartorgraphy no longer works due to API drift): 
 
 ```
 git checkout v0.4.2
@@ -85,7 +85,7 @@ Then move into the `2023-actin-embedding` folder for the remainder of the analys
 
 ### 4. Fetch data from the `Actin Prediction` repo
 
-Once ProteinCartography is installed, you can find the data generated in the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline on [Zenodo](https://zenodo.org/records/7384393). This data is also included in the `Inputs` folder of this repository as `all_outputs_summarized.tsv`. The proteins from this file were used as our input for the analysis in this repository. Because it includes many proteins, this was broken up into 2 batches: `2022-actin-prediction-blastoutputs1.txt` and `2022-actin-prediction-blastoutputs2.txt`.
+Once ProteinCartography is installed, you can find the data generated in the [Actin Prediction](https://github.com/Arcadia-Science/2022-actin-prediction) pipeline on [Zenodo](https://zenodo.org/records/7384393). This data is also included in the `input` folder of this repository as `all_outputs_summarized.tsv`. The proteins from this file were used as our input for the analysis in this repository. Because it includes many proteins, this was broken up into 4 batches: `2022-actin-prediction-blastoutputs1.txt` through `2022-actin-prediction-blastoutputs4.txt`.
 
 The notebooks in this repository were created to help prepare the metadata, download AlphaFold structures, and apply additional custom overlays to the output map. 
 
@@ -115,15 +115,22 @@ We placed the `config_ff_actin.yml` file, which can be found in the `ProteinCart
 conda activate cartography-tidy
 ```
 
-Then, from within the `ProteinCartography` folder, the following command used to run the ProteinCartography pipeline from "Cluster Mode" was: 
+Then, from within the `ProteinCartography` folder, the following command was used to run the ProteinCartography pipeline in "Cluster Mode" for the original analysis (using v0.4.2 of ProteinCartography): 
 
 ```
 snakemake --snakefile Snakefile_ff --configfile actin/config_ff_actin.yml --use-conda --cores 2
 ```
 
+The updated command for the newest version of the ProteinCartography is: 
+```
+snakemake --snakefile Snakefile --configfile new_config.yml --use-conda --cores 2
+```
+
+> **Note:** The UMAP embedding and Leiden clustering steps are stochastic, so cluster assignments and embedding layouts may differ slightly between runs and from the figures in the published pub. Users who need the exact original outputs can download them from the [Zenodo archive](https://zenodo.org/records/10641662).
+
 ### 8. Create custom plots
 
-We used the results of ProteinCartography and the results form the Actin Prediction pipeline to create custom plots. To do this, we moved back into the `2023-actin-emedding/notebooks` folder, and then ran the `3_plotting_overlays.ipynb` using the `2023-actin-embedding` environment. To activate this environment, run the following command: 
+We used the results of ProteinCartography and the results from the Actin Prediction pipeline to create custom plots. To do this, we moved back into the `2023-actin-embedding/notebooks` folder, and then ran the `3_plotting_overlays.ipynb` using the `2023-actin-embedding` environment. To activate this environment, run the following command: 
 
 ```
 conda activate 2023-actin-embedding

@@ -12,6 +12,8 @@ dependencies:
   - ipython=8.13.2
   - pip=23.2.1
   - ratelimiter=1.2.0
+  - plotly=6.7.0
+  - matplotlib=3.9.4
   - pip:
       - "--editable=git+https://github.com/Arcadia-Science/arcadia-pycolor.git@245ad0c#egg=arcadia_pycolor"
       - bioservices==1.11.2
